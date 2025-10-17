@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio de Ajay MUTHU KUMAR</title>
+  <!-- Link vers TEST.css supprimé car les styles sont intégrés, mais vous pouvez le garder si vous avez d'autres styles dedans -->
+  <!-- <link rel="stylesheet" href="TEST.css" /> -->
+  <link rel="icon" href="https://img.pikbest.com/png-images/20241022/stealth-masked-hacker-gaming-logo-for-gamers_10991543.png!w700wp" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #000; /* Fond noir pour l'effet Matrix */
+      color: #333;
+      margin-left: 220px; /* Espace pour la sidebar */
+      position: relative; /* Nécessaire pour le z-index des enfants */
+      min-height: 100vh; /* Assure que le body prend au moins toute la hauteur */
+    }
+
+.identite {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.infos h2 {
+  color: #53b2a9;
+}
+
+.infos p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.bas {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  gap: 20px; /* espace entre le logo et la carte */
+}
+
+.logo {
+  width: 150px;
+}
+
+.carte iframe {
+  border-radius: 8px;
+}
+
+.certification {
+  width: 230px;
+
+}
+
+
+    #codeCanvas {
+      position: fixed; /* Fixe le canvas en arrière-plan */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1; /* Place le canvas derrière tout le contenu */
+    }
+
+    /* Styles de la sidebar inchangés */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 220px;
+      background-color: #003366;
+      padding-top: 20px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1000; /* Au-dessus du contenu et du canvas */
+    }
+
+    .sidebar .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .sidebar nav ul {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar nav ul li a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 12px 12px;
+      transition: background 0.3s;
+    }
+
+    .sidebar nav ul li a:hover {
+      background-color: #0055aa;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 30px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    /* Styles des sections */
+    section {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: white; /* Fond blanc pour la lisibilité */
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative; /* Pour s'assurer qu'elles sont au-dessus du canvas */
+      z-index: 1;
+    }
+
+    /* Style spécifique pour la section Accueil */
+    #accueil {
+      /* Hérite de 'section' mais avec fond transparent et texte blanc */
+      background: transparent; /* Fond transparent pour voir l'animation Matrix */
+      color: white; /* Garder le texte blanc pour contraster avec le fond Matrix */
+      height: 100vh;
+      display: flex;
+      flex-direction: column; /* Alignement vertical */
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden; /* Cache le débordement si nécessaire */
+      box-shadow: none; /* Optionnel : supprimer l'ombre si désiré */
+      border-radius: 0; /* Optionnel : supprimer le radius si désiré */
+      margin: 0 auto; /* Centre la section horizontalement, pas de marge verticale haute/basse */
+      padding: 20px; /* Un peu de padding */
+    }
+
+    #accueil h1, #accueil h2, #accueil p, #accueil a {
+       position: relative; /* S'assure que le texte est bien au-dessus */
+       z-index: 2;
+    }
+
+    #accueil h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: white; /* Assure la couleur */
+    }
+
+    #accueil h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: #e0e0e0; /* Un peu moins blanc que le titre */
+    }
+     #accueil h2 span {
+         color: #ffffff; /* Nom en blanc */
+     }
+
+
+    #accueil p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: white; /* Assure la couleur */
+    }
+
+    #accueil a {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: #ffffff;
+      color: #003366; /* Texte sombre sur bouton blanc */
+      font-weight: bold;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    #accueil a:hover {
+        background-color: #e0e0e0;
+        color: #002244;
+    }
+
+     /* Icône SVG dans l'accueil */
+    #accueil svg {
+        margin-bottom: 30px;
+        stroke: #ffffff; /* Couleur du contour de l'icône */
+    }
+
+    /* Styles pour le reste des sections */
+    h2 {
+      margin-bottom: 20px;
+      color: #003366; /* Titres des sections en bleu foncé */
+    }
+
+    .projet {
+      margin-bottom: 20px;
+    }
+
+    /* Styles Footer */
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+      position: relative; /* Pour s'assurer qu'il est au-dessus du canvas */
+      z-index: 1;
+    }
+
+    /* Styles Responsive */
+    @media (max-width: 768px) {
+      body {
+        margin-left: 0;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative; /* Change de fixed à relative */
+        flex-direction: row; /* Logo et hamburger sur la même ligne */
+        justify-content: space-between; /* Espace entre logo et hamburger */
+        padding: 10px 20px;
+        align-items: center;
+      }
+       .sidebar .logo {
+           margin-bottom: 0; /* Supprime la marge en bas */
+       }
+
+      .sidebar nav ul {
+        display: none; /* Caché par défaut */
+        position: absolute; /* Pour le faire apparaître sous la barre */
+        top: 100%; /* Juste en dessous de la barre */
+        left: 0;
+        width: 100%;
+        background-color: #003366; /* Fond pour le menu déroulant */
+        flex-direction: column; /* Les liens s'empilent verticalement */
+      }
+
+
+      .sidebar nav ul.show {
+        display: flex; /* Affiché quand 'show' est ajouté */
+      }
+
+      .hamburger {
+        display: block; /* Afficher le hamburger */
+        align-self: center; /* Centre verticalement */
+        color: white;
+         margin-bottom: 0; /* Supprime la marge en bas */
+      }
+
+      #accueil {
+          height: auto; /* Hauteur auto sur mobile */
+          min-height: 80vh; /* Hauteur minimale pour garder un peu d'espace */
+          padding-top: 80px; /* Plus de padding en haut pour compenser la barre */
+      }
+       #accueil h1 { font-size: 2.2rem; }
+       #accueil h2 { font-size: 1.5rem; }
+       #accueil p { font-size: 1rem; }
+
+      section {
+          margin: 20px 10px; /* Moins de marge sur mobile */
+          padding: 20px;
+      }
+
+    }
+
+    /* --- Styles pour les Projets (card, etc.) --- */
+    .section-projets {
+        padding: 40px 20px; /* Ajustez le padding si nécessaire */
+    }
+
+    .projets-titre {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #003366;
+    }
+
+    .projets-soustitre {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #555;
+    }
+
+    .projects {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Grille responsive */
+        gap: 25px; /* Espacement entre les cartes */
+    }
+
+    .card {
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden; /* Pour que l'image ne dépasse pas */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column; /* Met le contenu en colonne */
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card img {
+        width: 100%;
+        height: 180px; /* Hauteur fixe pour l'image */
+        object-fit: cover; /* Assure que l'image couvre la zone sans se déformer */
+    }
+
+    .card-content {
+        padding: 20px;
+        flex-grow: 1; /* Permet au contenu de prendre l'espace restant */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-content h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+        color: #003366;
+    }
+
+    .card-content p {
+        font-size: 0.95rem;
+        color: #555;
+        flex-grow: 1; /* Pousse les badges vers le bas si l'espace le permet */
+        margin-bottom: 15px;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        margin-right: 5px;
+        margin-bottom: 10px; /* Espacement en bas des badges */
+        color: #fff;
+        background-color: #6c757d; /* Couleur par défaut */
+    }
+
+    /* Couleurs spécifiques pour les badges */
+    .badge.html { background-color: #e34c26; }
+    .badge.css { background-color: #264de4; }
+    .badge.csharp { background-color: #68217a; }
+    .badge.java { background-color: #f89820; }
+    /* Ajoutez d'autres couleurs si nécessaire */
+     .badge.linux { background-color: #FCC624; color: #000; }
+     .badge.debian { background-color: #A80030; }
+     .badge.haproxy { background-color: #00AFEF; }
+     .badge.glpi { background-color: #17467B; }
+
+
+    /* Style pour l'iframe dans les cartes */
+    .card iframe {
+        border: 1px solid #ccc;
+        margin-top: 15px;
+        width: 100%; /* Prend toute la largeur de la carte */
+        height: 300px; /* Hauteur fixe, ajustez si besoin */
+        display: block; /* Pour éviter les espaces indésirables */
+    }
+
+    /* --- Styles pour Veille Technologique (Accordion) --- */
+    .accordion {
+      background-color: #eee;
+      color: #444;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+      transition: 0.4s;
+      margin-top: 10px;
+      border-radius: 5px;
+      display: flex; /* Pour aligner icône et texte */
+      align-items: center;
+    }
+
+    .question-icon::before {
+        content: '❓'; /* Icône de question */
+        margin-right: 10px;
+        font-size: 1.1em;
+    }
+
+    .active, .accordion:hover {
+      background-color: #ccc;
+    }
+
+    .panel {
+      padding: 0 18px;
+      background-color: white;
+      display: none;
+      overflow: hidden;
+      border-left: 3px solid #003366; /* Ligne décorative */
+      margin-left: 5px; /* Léger décalage */
+    }
+     .panel p {
+         padding: 15px 0;
+     }
+
+     /* --- Styles pour Compétences --- */
+    #competences .intro {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap; /* Permet de passer à la ligne sur petits écrans */
+      gap: 30px; /* Espace entre les colonnes */
+      justify-content: space-between; /* Espace équitablement */
+    }
+
+    .skills-column {
+      flex: 1; /* Chaque colonne prend une part égale */
+      min-width: 250px; /* Largeur minimum avant de passer à la ligne */
+    }
+
+    .skill {
+      margin-bottom: 20px;
+    }
+
+    .skill-name {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+     .percentage {
+        float: right; /* Aligne le pourcentage à droite */
+        font-size: 0.9em;
+        color: #555;
+     }
+
+
+    .progress-bar {
+      width: 100%;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      height: 15px; /* Hauteur de la barre */
+      overflow: hidden; /* Cache le dépassement */
+    }
+
+    .progress {
+      height: 100%;
+      background-color: #007bff; /* Couleur par défaut */
+      border-radius: 5px;
+      text-align: center; /* Peut être utilisé pour afficher le % à l'intérieur */
+      color: white;
+      font-size: 0.8em;
+      line-height: 15px; /* Centre verticalement le texte s'il y en a */
+      transition: width 1s ease-in-out; /* Animation douce */
+    }
+
+    /* Largeurs et couleurs spécifiques pour chaque compétence */
+    .progress.html { width: 75%; background-color: #e34c26; }
+    .progress.php { width: 50%; background-color: #777BB4; }
+    .progress.css { width: 70%; background-color: #264de4; }
+    .progress.cs { width: 60%; background-color: #68217a; }
+    .progress.bash { width: 80%; background-color: #4EAA25; }
+    .progress.js { width: 80%; background-color: #323330; } /* Renommé DNS -> js (ou créer .dns) */
+    .progress.java { width: 60%; background-color: #f89820; }
+    .progress.sql { width: 80%; background-color: #4479A1; }
+    .progress.node { width: 90%; background-color: #86B31B; } /* Renommé Debian -> node (ou créer .debian) */
+    .progress.python { width: 60%; background-color: #3776AB; }
+
+    /* Ajoutez les classes manquantes si nécessaire */
+     .progress.dns { width: 80%; background-color: #323330; }
+     .progress.debian { width: 90%; background-color: #A80030; }
+
+
+    /* --- Styles pour Contact --- */
+    #contact a {
+        color: #0055aa;
+        text-decoration: none;
+    }
+    #contact a:hover {
+        text-decoration: underline;
+    }
+    #contact .container {
+        margin-top: 30px;
+    }
+    #contact .row > div { /* Assure un espacement vertical sur mobile */
+        margin-bottom: 15px;
+    }
+
+    /* --- Styles pour Google Maps dans contact --- */
+    #contact iframe {
+        margin-top: 20px; /* Espace au-dessus de la carte */
+        max-width: 100%; /* S'assure qu'elle ne dépasse pas */
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Canvas pour l'animation Matrix -->
+  <canvas id="codeCanvas"></canvas>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">Ajay <strong>MUTHU KUMAR</strong></div>
+    <div class="hamburger" id="hamburger">☰</div>
+    <nav>
+      <ul id="nav-links">
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#a-propos-de-moi">À propos</a></li>
+        <li><a href="#BTS SIO">BTS SIO</a></li>
+        <li><a href="#Mes Projets">Mes projets</a></li>
+        <li><a href="#Certifications">Certifications</a></li>
+        <li><a href="#Entreprise">Entreprise</a></li>
+        <li><a href="#Veille Technologique">Veille Technologique</a></li>
+        <li><a href="#competences">Compétences</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Contenu principal -->
+  <main>
+    <!-- ACCUEIL -->
+    <section id="accueil">
+      <!-- Contenu principal de l'accueil -->
+      <div style="max-width: 900px;">
+        <!-- Icône SVG -->
+        <div>
+          <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.5 7L5 12l4.5 5M14.5 7l4.5 5-4.5 5"/>
+            <rect x="1" y="1" width="22" height="22" rx="3" ry="3"></rect> <!-- Ajusté height à 22 pour être carré -->
+          </svg>
+        </div>
+
+        <h1>Bienvenue sur mon Portfolio</h1>
+        <h2>Je suis <span>Ajay MUTHU KUMAR</span></h2>
+        <p>
+          Étudiant en BTS SIO à l’école IRIS, passionné par l’informatique, le développement et les systèmes réseaux.
+        </p>
+        <a href="#a-propos-de-moi">En savoir plus sur moi</a>
+      </div>
+    </section>
+
+    <!-- AUTRES SECTIONS -->
+    <section id="a-propos-de-moi">
+      <h2>À propos de moi</h2>
+      <p>Je m'appelle Ajay MUTHU KUMAR, je suis âgé de 19 ans. Je suis actuellement un étudiant à Paris au école informatique IRIS, en première année en BTS SIO (Services Informatiques aux Organisations), passionné par l'informatique, le développement et les réseaux.</p>
+      <br>
+      <p>Depuis toujours passionné par les nouvelles technologies, j’ai choisi cette formation pour acquérir des compétences solides en informatique, dans la gestion des infrastructures réseaux et systèmes (option SISR).</p>
+      <br>
+      <p>Rigoureux, autonome et curieux, je suis motivé par la volonté d’apprendre et de relever des défis techniques.</p>
+      <br>
+      <p>Grâce à mon alternance en entreprise, j’ai pu mettre en pratique mes connaissances dans des projets concrets et développer mon sens de l’organisation et du travail en équipe.</p>
+      <a href="Ajay muthu kumar (5).pdf" download style="text-decoration: none; color: white; background-color: #007BFF; padding: 10px 15px; border-radius: 5px;">
+        📄 Télécharger mon CV en PDF
+      </a>
+       
+      <a href="La lettre de motivation d'Ajay Muthu Kumar.pdf" download style="text-decoration: none; color: white; background-color: #007BFF; padding: 10px 15px; border-radius: 5px;">
+        📄 Télécharger ma lettre de motivation en PDF
+      </a>
+    </section>
+
+    <section id="BTS SIO">
+        <h2>Qu'est ce que le BTS SIO ?</h2>
+        <p> Le Brevet de technicien supérieur Services informatiques aux organisations (BTS SIO) est un diplôme reconnu par l’État de niveau bac+2. Il est certifié niveau 5 au RNCP (répertoire national des certifications professionnelles) et se prépare dans des établissements publics et privés, en formation initiale ou en alternance. En règle générale, il est possible de se former à ce programme à Paris ou en région, dans un lycée ou dans un CFA, pour tous ceux qui veulent opter pour l’alternance.</p>
+        <br>
+        <h2>Deux spécialités au choix :</h2>
+
+        <h3>🔹 Option SISR : Solutions d’Infrastructure, Systèmes et Réseaux</h3>
+        <p> Cette option est destinée à former des techniciens capables de gérer des réseaux, des infrastructures informatiques, et des systèmes.</p>
+        <h4> Vous pouvez faire :</h4>
+        <ul>
+        <li>Administration de réseaux et de systèmes</li>
+        <li>Maintenance informatique</li>
+        <li>Sécurité des infrastructures</li>
+        <li>Gestion de serveurs et de parcs informatiques</li>
+        </ul>
+        <br>
+        <h3>🔹 Option SLAM : Solutions Logicielles et Applications Métiers</h3>
+        <p> Cette option se concentre sur le développement de logiciels et d'applications. Les étudiants sont formés à l'analyse des besoins des utilisateurs, au développement et à la maintenance d'applications informatiques.</p>
+        <h4> Vous pouvez faire :</h4>
+        <ul>
+        <li>Développement de sites web et d'applications</li>
+        <li>Programmation orientée objet</li>
+        <li>Gestion de bases de données</li>
+        <li>Tests et maintenance de logiciels</li>
+        </ul>
+        <br>
+        <h2>Contenu de la formation :</h2>
+        <ul>
+        <li>Culture générale et expression</li>
+        <li>Anglais</li>
+        <li>Mathématiques</li>
+        <li>CEJM</li>
+        <li>SISR, SLAM, BDD (Développement), Système et Réseaux</li>
+        <li>Projets, stages ou alternance</li>
+        </ul>
+    </section>
+
+    <section id="Mes Projets" class="section-projets">
+        <h1 class="projets-titre">Mes Projets</h1>
+        <p class="projets-soustitre">
+        Voici une sélection de projets réalisés pendant ma formation et mes projets personnels.
+        </p>
+
+        <div class="projects">
+
+            <!-- Projet 1 -->
+            <div class="card">
+            <img src="Linux.png" alt="Linux">
+            <div class="card-content">
+                <h3>TP Linux Préparation Topologie Routage </h3>
+                <p>Ce premier TP m’a permis de découvrir les avantages du système Linux, en particulier avec la distribution Debian.</p>
+                <span class="badge linux">Linux</span>
+
+                <!-- PDF intégré -->
+                <iframe src="TP Linux Préparation Topologie Routage - Alan et Ajay.pdf" width="100%" height="300px"></iframe>
+            </div>
+            </div>
+
+            <!-- Projet 2 -->
+            <div class="card">
+            <img src="portfolio1.png" alt="Portfolio">
+            <div class="card-content">
+                <h3>Portfolio Ajay MUTHU KUMAR</h3>
+                <p>Mon tout premier portfolio en HTML et en CSS.</p>
+                <span class="badge html">HTML</span>
+                <span class="badge css">CSS</span>
+
+                <!-- Lien vers le projet ou iframe si possible -->
+                 <iframe src="TEST.html" width="100%" height="300px"></iframe> <!-- Assurez-vous que TEST.html est accessible -->
+            </div>
+            </div>
+
+            <!-- Projet 3 -->
+            <div class="card">
+            <img src="haproxy.png" alt="haproxy">
+            <div class="card-content">
+                <h3>High availability : HaProxy & Heartbeat sous Debian 12</h3>
+                <p>J’ai appris à utiliser HAProxy, un outil puissant de répartition de charge (load balancing).</p>
+                <span class="badge haproxy">Haproxy</span>
+                <span class="badge debian">Debian</span>
+
+                <!-- PDF intégré -->
+                <iframe src="Livrable HAProxy.pdf" width="100%" height="300px"></iframe>
+            </div>
+            </div>
+
+            <!-- Projet 4 -->
+            <div class="card">
+            <img src="glpi.webp" alt="Glpi">
+            <div class="card-content">
+                <h3>Projet GLPI</h3>
+                <p> j’ai eu l’occasion d’installer et de configurer GLPI, une solution open source de gestion de parc informatique.</p>
+                <span class="badge glpi">GLPI</span>
+
+                <!-- PDF intégré -->
+                <iframe src="PROJET GLPI BDD ALAN AJAY.pdf" width="100%" height="300px"></iframe>
+            </div>
+            </div>
+        </div>
+    </section>
+
+
+<section id="Certifications">
+  <h2>Certifications</h2>
+<p>Voici mes certifications :</p>
+<br>
+<img src="PIX.jpg" alt="PIX certification" class="certification">
+  
+</section>
+
+
+
+    <section id="Entreprise">
+      <h2>Entreprise</h2>
+
+      <p>ENGIE Home Services est une entreprise française créée en 1974. Elle s’appelait autrefois Savelys avant de prendre son nom actuel en 2015, lorsqu’elle a rejoint le groupe ENGIE.
+
+Elle est spécialisée dans l’entretien, le dépannage et l’installation de systèmes de chauffage et de climatisation pour les particuliers.
+
+L’entreprise est dirigée par Benoît Pons et compte des milliers de techniciens partout en France pour aider les clients au quotidien.</p>
+<br>
+<p>J’ai intégré l’entreprise en septembre 2024 en tant que technicien support informatique utilisateur. Depuis mon arrivée, j’ai eu l’occasion de m’adapter rapidement à l’environnement de travail et de contribuer activement à la résolution des incidents techniques rencontrés par les utilisateurs. Actuellement, notre équipe de support se compose de huit personnes, moi inclus, ce qui nous permet d'assurer une couverture efficace et réactive face aux demandes internes. Cette collaboration au sein d’une équipe dynamique m’a permis de renforcer mes compétences techniques tout en développant un réel sens du service.</p>
+
+<section class="identite">
+  <div class="infos">
+    <h2>IDENTITÉ DE L'ENTREPRISE</h2>
+    <p><strong>Nom :</strong> ENGIE Home Services (anciennement Savelys)</p>
+    <p><strong>Statut juridique :</strong>  SASU (Société par Actions Simplifiée à Associé Unique)</p>
+    <p><strong>Siège social :</strong> 1 place Samuel de Champlain, 92400 Courbevoie, France</p>
+    <p><strong>Société mère :</strong> ENGIE</p>
+    <p><strong>Chiffres d'affaires :</strong> 587 millions d'euros en 2021</p>
+    <p><strong>Direction :</strong> Benoît Pons, Président-Directeur Général</p>
+    <p><strong>Activités principales :</strong> "Entretien et maintenance", "Dépannage", "Installation et mise en service", "Remplacement et rénonvation énergétique" et "Mobilité verte"</p>
+    <p><strong>Effectif de l’entreprise :</strong> environ 5 000 collaborateurs</p>
+
+    <div class="bas">
+      <img src="EHS.png" alt="Logo entreprise" class="logo">
+      <div class="carte">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2623.0390002979057!2d2.237086175061975!3d48.89559389808951!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e665ddcf9337e9%3A0x7034dd43df8a3c24!2sENGIE%20Tour%20T1!5e0!3m2!1sfr!2sfr!4v1746998635870!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+    <section id="Veille Technologique">
+      <h2>Veille Technologique</h2>
+
+      <button class="accordion"><span class="question-icon"></span> Qu'est-ce que la veille technologique ?</button>
+      <div class="panel">
+        <p>La veille technologique se définit comme tous les moyens déployés par une entreprise pour collecter et analyser des informations techniques afin de soutenir sa croissance. Cette démarche doit la tenir en alerte face aux changements, qu'ils soient scientifiques ou techniques.</p>
+      </div>
+
+      <button class="accordion"><span class="question-icon"></span> Quel est le but d'une veille technologique ?</button>
+      <div class="panel">
+        <p>La veille technologique est un ensemble de techniques qui permet de surveiller l'arrivée de nouvelles innovations et technologies sur un marché cible. Pour cela, une entreprise collecte des données, les analyse et les transmet dans le but d'atteindre ses objectifs et d'améliorer sa stratégie.</p>
+      </div>
+    </section>
+
+
+    <section id="competences">
+      <h2>Compétences</h2>
+      <p class="intro">Durant ma formation j'ai pu pratiquer et acquérir des connaissances sur différents langages et technologies.</p>
+
+      <div class="skills-container">
+        <!-- Colonne de gauche -->
+        <div class="skills-column">
+          <div class="skill">
+            <span class="skill-name">HTML5</span>
+            <span class="percentage">75%</span>
+            <div class="progress-bar"><div class="progress html"></div></div>
+          </div>
+          <div class="skill">
+            <span class="skill-name">PHP</span>
+            <span class="percentage">50%</span>
+            <div class="progress-bar"><div class="progress php"></div></div>
+          </div>
+          <div class="skill">
+            <span class="skill-name">CSS3</span>
+            <span class="percentage">70%</span>
+            <div class="progress-bar"><div class="progress css"></div></div>
+          </div>
+          <div class="skill">
+            <span class="skill-name">C#</span>
+            <span class="percentage">60%</span>
+            <div class="progress-bar"><div class="progress cs"></div></div>
+          </div>
+          <div class="skill">
+            <span class="skill-name">Bash</span>
+            <span class="percentage">80%</span>
+            <div class="progress-bar"><div class="progress bash"></div></div>
+          </div>
+        </div>
+
+        <!-- Colonne de droite -->
+        <div class="skills-column">
+          <div class="skill">
+            <span class="skill-name">DNS</span>
+             <span class="percentage">80%</span>
+            <div class="progress-bar"><div class="progress dns"></div></div> <!-- Classe .dns ajoutée -->
+          </div>
+          <div class="skill">
+            <span class="skill-name">Java</span>
+            <span class="percentage">60%</span>
+            <div class="progress-bar"><div class="progress java"></div></div>
+          </div>
+          <div class="skill">
+            <span class="skill-name">SQL</span>
+            <span class="percentage">80%</span>
+            <div class="progress-bar"><div class="progress sql"></div></div>
+          </div>
+          <div class="skill">
+            <span class="skill-name">Debian</span>
+            <span class="percentage">90%</span>
+            <div class="progress-bar"><div class="progress debian"></div></div> <!-- Classe .debian ajoutée -->
+          </div>
+          <div class="skill">
+            <span class="skill-name">Python</span>
+            <span class="percentage">60%</span>
+            <div class="progress-bar"><div class="progress python"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Email : <a href="mailto:ajay.muthukumar2102@gmail.com">ajay.muthukumar2102@gmail.com</a></p>
+      <p>Numéro : +33 6 29 75 98 77</p>
+      <p>LinkedIn : <a href="https://www.linkedin.com/in/ajay-muthu-kumar-350934207/" target="_blank">Mon Profil</a></p>
+
+      <div class="container mt-4">
+        <h3>Envoyez-moi un message !</h3>
+        <!-- Assurez-vous d'avoir un fichier traitement.php ou changez l'action -->
+        <form action="traitement.php" method="post" class="row g-3">
+          <div class="col-md-6">
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="nom" name="nom" required>
+          </div>
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+          <div class="col-12">
+            <label for="sujet" class="form-label">Sujet</label>
+            <input type="text" class="form-control" id="sujet" name="sujet">
+          </div>
+          <div class="col-12">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+          </div>
+        </form>
+
+        <!-- Colonne Google Maps -->
+        <div style="margin-top: 30px;"> <!-- Ajout marge pour séparation -->
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5247.1943191941255!2d2.2907804753171703!3d48.88495559883813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66f91aa85bfb1%3A0xca6c403c8e457b76!2sIRIS%20-%20%C3%89cole%20sup%C3%A9rieure%20d&#39;informatique!5e0!3m2!1sfr!2sfr!4v1747033490594!5m2!1sfr!2sfr" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Ajay MUTHU KUMAR - Tous droits réservés</p>
+  </footer>
+
+  <!-- Script pour l'animation Canvas -->
+  <script>
+    const canvas = document.getElementById("codeCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+    // Utilisation de caractères Katakana pour l'effet Matrix
+    const letters = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=<>|%#@!^&(){}[]?;";
+    const fontSize = 16; // Taille de police légèrement augmentée
+    let columns = Math.floor(width / fontSize);
+    let drops = Array(columns).fill(1); // Initialiser avec des valeurs différentes pour démarrer aléatoirement ? non, 1 est ok.
+
+    function drawMatrix() {
+      // Fond semi-transparent pour créer l'effet de traînée
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.fillStyle = "#00FFFF"; // Couleur verte pour les caractères
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        // Renvoyer la goutte en haut aléatoirement ou si elle dépasse l'écran
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    // Démarrer l'animation
+    let animationInterval = setInterval(drawMatrix, 50); // Légèrement plus lent (50ms) pour un effet plus classique
+
+    // Ajuster le canvas lors du redimensionnement de la fenêtre
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      columns = Math.floor(width / fontSize);
+      // Redimensionner le tableau drops et le remplir
+      drops = Array(columns).fill(1);
+       // Optionnel : Redémarrer l'intervalle peut éviter certains artefacts au redimensionnement
+      // clearInterval(animationInterval);
+      // animationInterval = setInterval(drawMatrix, 50);
+    });
+
+    // Initialisation au chargement (peut être redondant si resize est appelé)
+     // L'appel initial à resize n'est pas forcément nécessaire si on initialise width/height/columns correctement
+     // Cependant, le code original l'avait, gardons-le par sécurité.
+     /* window.onload = () => {
+        // Déjà fait au début du script, mais assure les dimensions après chargement complet
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        columns = Math.floor(width / fontSize);
+        drops = Array(columns).fill(1);
+     }; */
+
+  </script>
+
+  <!-- Script pour le hamburger menu et l'accordéon -->
+  <script>
+    // Hamburger Menu
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("nav-links");
+
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
+
+    // Accordion pour Veille Technologique
+    const acc = document.querySelectorAll(".accordion");
+    acc.forEach(btn => {
+      btn.addEventListener("click", function () {
+        // Ferme tous les panneaux ouverts sauf celui cliqué (si déjà ouvert)
+         acc.forEach(otherBtn => {
+            if (otherBtn !== this && otherBtn.classList.contains('active')) {
+                otherBtn.classList.remove('active');
+                otherBtn.nextElementSibling.style.display = 'none';
+            }
+         });
+
+        // Ouvre ou ferme le panneau cliqué
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+          panel.style.display = "none";
+        } else {
+          panel.style.display = "block";
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
